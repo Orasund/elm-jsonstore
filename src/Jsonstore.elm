@@ -20,7 +20,7 @@ module Jsonstore exposing
 
 ## Dealing with Objects
 
-@docs JsonObject, object, toJson, with, withList, withMaybe
+@docs object, toJson, with, withList, withMaybe
 
 
 ## Http Requests
@@ -42,42 +42,74 @@ type Json a
     = Json ( D.Decoder a, a -> Value )
 
 
+{-| -}
 map : (a -> b) -> (b -> a) -> Json a -> Json b
 map dFun eFun (Json ( d, e )) =
     Json ( D.map dFun d, eFun >> e )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+
+    "1" |> (int |> decode |> D.decodeString) --> Ok 1
+
+-}
 int : Json Int
 int =
     Json ( D.int, E.int )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+
+    "3.14" |> (float |> decode |> D.decodeString) --> Ok 3.14
+
+-}
 float : Json Float
 float =
     Json ( D.float, E.float )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+
+    "\"Hello World\"" |> (string |> decode |> D.decodeString) --> Ok "Hello World"
+
+-}
 string : Json String
 string =
     Json ( D.string, E.string )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+
+    "true" |> (bool |> decode |> D.decodeString) --> Ok True
+
+-}
 bool : Json Bool
 bool =
     Json ( D.bool, E.bool )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+    import Dict exposing (Dict)
+
+    "{\"value\":42}"
+    |> (int |> dict |> decode |> D.decodeString) --> Ok (Dict.singleton "value" 42)
+
+-}
 dict : Json a -> Json (Dict String a)
 dict (Json ( d, e )) =
     Json ( d |> D.dict, E.dict identity e )
 
 
-{-| -}
 type JsonObject obj a
     = JsonObject ( Decoder obj, List ( String, a -> Value ) )
 
@@ -123,7 +155,26 @@ withMaybe name (Json json) value (JsonObject ( d, e )) =
         )
 
 
-{-| -}
+{-|
+
+    import Json.Decode as D
+
+    type alias Obj =
+        { value : Int
+        , name : String
+        }
+
+    "{\"value\":42,\"name\":\"Elm\"}"
+    |> ( object Obj
+        |> with "value" int .value
+        |> with "name" string .name
+        |> toJson
+        |> decode
+        |> D.decodeString
+        )
+    --> Ok {value=42,name="Elm"}
+
+-}
 object : obj -> JsonObject obj a
 object fun =
     JsonObject ( D.succeed fun, [] )
