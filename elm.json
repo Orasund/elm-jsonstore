@@ -1,6 +1,6 @@
 {
     "type": "package",
-    "name": "Orasund/elm-action",
+    "name": "Orasund/elm-jsonstore",
     "summary": "Custom Json and Http functions to work with Jsonstore.io",
     "license": "BSD-3-Clause",
     "version": "1.0.0",
