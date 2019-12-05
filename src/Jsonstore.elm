@@ -76,7 +76,9 @@ float =
 
     import Json.Decode as D
 
-    "\"Hello World\"" |> (string |> decode |> D.decodeString) --> Ok "Hello World"
+    "\"Hello World\""
+    |> (string |> decode |> D.decodeString)
+    --> Ok "Hello World"
 
 -}
 string : Json String
@@ -88,7 +90,9 @@ string =
 
     import Json.Decode as D
 
-    "true" |> (bool |> decode |> D.decodeString) --> Ok True
+    "true"
+    |> (bool |> decode |> D.decodeString)
+    --> Ok True
 
 -}
 bool : Json Bool
@@ -102,7 +106,8 @@ bool =
     import Dict exposing (Dict)
 
     "{\"value\":42}"
-    |> (int |> dict |> decode |> D.decodeString) --> Ok (Dict.singleton "value" 42)
+    |> (int |> dict |> decode |> D.decodeString)
+    --> Ok (Dict.singleton "value" 42)
 
 -}
 dict : Json a -> Json (Dict String a)
