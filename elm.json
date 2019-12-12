@@ -3,7 +3,7 @@
     "name": "Orasund/elm-jsonstore",
     "summary": "Custom Json and Http functions to work with Jsonstore.io",
     "license": "BSD-3-Clause",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "exposed-modules": [
         "Jsonstore"
     ],

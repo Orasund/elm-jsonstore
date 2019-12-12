@@ -347,11 +347,10 @@ Therefore never try to update a full list of object,
 rather send an seperate update/delete file for every entry of the list.
 
 -}
-update : { url : String, decoder : Decoder a, value : Maybe a -> Maybe Value } -> Task Error ()
-update { url, decoder, value } =
-    get url decoder
+update : String -> Json a -> (a -> a) -> Task Error ()
+update url json fun =
+    get url (json |> decode)
         |> Task.andThen
-            (value
-                >> Maybe.map (insert url)
+            (Maybe.map (fun >> encode json >> insert url)
                 >> Maybe.withDefault (Task.succeed ())
             )
