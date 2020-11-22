@@ -1,3 +1,7 @@
+# DEPRECATED
+
+[jsonstore.io](https://github.com/bluzi/jsonstore) has officially shutdown in 2020. Therefore this package has no use anymore. I suggest to use [IzumiSy/elm-firestore](https://package.elm-lang.org/packages/IzumiSy/elm-firestore/latest) instead, as it offers the same functionality.
+
 # Elm-Jsonstore
 
 This packages is for working with [jsonstore.io](https://github.com/bluzi/jsonstore).
